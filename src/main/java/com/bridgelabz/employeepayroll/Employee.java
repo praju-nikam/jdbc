@@ -2,7 +2,6 @@ package com.bridgelabz.employeepayroll;
 
 public class Employee
 {
-
     int empId;
     String empName,phoneNumber,address,startDate,gender;
     double basicPay,deductions,taxablePay,netPay;
