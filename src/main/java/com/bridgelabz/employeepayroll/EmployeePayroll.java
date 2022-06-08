@@ -15,11 +15,11 @@ public class EmployeePayroll
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         Scanner scanner = new Scanner(System.in);
         int choice=0;
-        int exit = 4;
+        int exit = 6;
         while (choice != exit)
         {
             System.out.println("Enter your choice :\n 1.Get Employee data \n 2.Update Basic Pay \n 3.Display Employee \n" +
-                    "4.Data Range \n 5.Exit");
+                    " 4.Data Range \n 5.Calculate \n 6.Exit");
             choice = scanner.nextInt();
 
             switch (choice)
@@ -58,6 +58,11 @@ public class EmployeePayroll
                     break;
 
                 case 5:
+                    employeePayrollService.calculate();
+                    System.out.println("");
+                    break;
+
+                case 6:
                     System.out.println(" You are Exit");
                     System.out.println("");
             }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class EmployeePayrollService
 {
@@ -116,6 +117,80 @@ public class EmployeePayrollService
             }
         }
         catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    void calculate()
+    {
+        Scanner scanner = new Scanner(System.in);
+        int exit = 6;
+        int choice = 0;
+        while(choice != exit)
+        {
+            System.out.println("Enter your Choice : \n 1.Sum \n 2.Avg \n 3.Min \n 4.Max \n 5.Count \n 6.Exit \n");
+            System.out.println();
+            choice = scanner.nextInt();
+            switch (choice)
+            {
+                case 1 :
+                    calculateQuery("Select Gender, sum(Basic_Pay) from employee_payroll GROUP BY Gender ");
+                    break;
+
+                case 2 :
+                    calculateQuery("Select Gender, avg(Basic_Pay) from employee_payroll GROUP BY Gender ");
+                    break;
+                case 3 :
+                    calculateQuery("Select Gender, min(Basic_Pay) from employee_payroll GROUP BY Gender ");
+                    break;
+
+                case 4 :
+                    calculateQuery("Select Gender, max(Basic_Pay) from employee_payroll GROUP BY Gender ");
+                    break;
+
+                case 5 :
+                    calculateQuery("Select Gender, count(Basic_Pay) from employee_payroll GROUP BY Gender ");
+                    break;
+
+                case 6 :
+                    System.out.println("In valid choice  ");
+                    break;
+
+            }
+        }
+    }
+
+    private void calculateQuery(String calculate)
+    {
+        List<Employee> result = new ArrayList<>();
+        try
+        {
+           preparedStatement = connection.prepareStatement(calculate);
+           ResultSet resultSet = preparedStatement.executeQuery();
+           while (resultSet.next())
+           {
+               Employee employee = new Employee();
+               employee.setGender(resultSet.getString(1));
+               employee.setBasicPay(resultSet.getDouble(2));
+               result.add(employee);
+           }
+           if (calculate.contains("Count"))
+           {
+               for (Employee i:result)
+               {
+                   System.out.println("Gender : " +i.getGender() + " Count : " +i.getBasicPay());
+               }
+           }
+           else
+           {
+               for (Employee i:result)
+               {
+                   System.out.println("Gender : " +i.getGender() + " BasicPay : " +i.getBasicPay());
+               }
+           }
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
