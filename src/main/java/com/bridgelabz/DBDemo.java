@@ -9,10 +9,13 @@ public class DBDemo {
         String userName = "root";
         String password = "Anvi@1112";
         Connection con;
-        try {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver Loaded ");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e)
+        {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
 
@@ -63,7 +66,9 @@ public class DBDemo {
 //                int i = preparedStatement.getUpdateCount();
 //                System.out.println(i + " rows updated!");
 //            }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

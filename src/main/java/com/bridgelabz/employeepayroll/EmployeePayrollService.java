@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,9 @@ public class EmployeePayrollService
 
     public void display()
     {
-        for (Employee e:employeeArrayList)
+        for (Employee employee:employeeArrayList)
         {
-            System.out.println(e.toString());
+            System.out.println(employee.toString());
         }
     }
 
@@ -76,8 +77,47 @@ public class EmployeePayrollService
                 return employee.basicPay;
             }
         }
-
         return 0.0;
     }
 
+    public void selectEmployee(LocalDate start,LocalDate end)
+    {
+        ArrayList<Employee> empSelected = new ArrayList<>();
+        String select = "select * from employee_payroll where empStart between ? AND ? ";
+        String startDate = String.valueOf(start);
+        String endDate = String.valueOf(end);
+
+        try
+        {
+            preparedStatement = connection.prepareStatement(select);
+            preparedStatement.setString(1,startDate);
+            preparedStatement.setString(2,endDate);
+            ResultSet resultSet =preparedStatement.executeQuery();
+
+            while (resultSet.next())
+            {
+                Employee employee = new Employee();
+                employee.setEmpId(resultSet.getInt("Id"));
+                employee.setEmpName(resultSet.getString("Name"));
+                employee.setPhoneNumber(resultSet.getString("Salary"));
+                employee.setStartDate(resultSet.getString("Start_Date"));
+                employee.setGender(resultSet.getString("Gender"));
+                employee.setPhoneNumber(resultSet.getString("Phone"));
+                employee.setAddress(resultSet.getString("Address"));
+                employee.setBasicPay(resultSet.getDouble("Basic_Pay"));
+                employee.setDeductions(resultSet.getDouble("Deductions"));
+                employee.setTaxablePay(resultSet.getDouble("Taxbale_Pay"));
+                employee.setNetPay(resultSet.getDouble("Net_Pay"));
+                employeeArrayList.add(employee);
+            }
+            for (Employee employee:empSelected)
+            {
+                System.out.println(employee);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
+}
