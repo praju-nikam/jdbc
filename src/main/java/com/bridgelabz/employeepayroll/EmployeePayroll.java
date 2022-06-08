@@ -3,6 +3,7 @@ package com.bridgelabz.employeepayroll;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,7 +18,8 @@ public class EmployeePayroll
         int exit = 4;
         while (choice != exit)
         {
-            System.out.println("Enter your choice :\n 1.Get Employee data \n 2.Update Basic Pay \n 3.Display Employee \n 4.Exit");
+            System.out.println("Enter your choice :\n 1.Get Employee data \n 2.Update Basic Pay \n 3.Display Employee \n" +
+                    "4.Data Range \n 5.Exit");
             choice = scanner.nextInt();
 
             switch (choice)
@@ -48,6 +50,14 @@ public class EmployeePayroll
                     break;
 
                 case 4:
+                    System.out.println("Enter initial date : ");
+                    LocalDate iDate = LocalDate.parse(scanner.next());
+                    System.out.println("Enter final date : ");
+                    LocalDate eDate = LocalDate.parse(scanner.next());
+                    employeePayrollService.selectEmployee(iDate,eDate);
+                    break;
+
+                case 5:
                     System.out.println(" You are Exit");
                     System.out.println("");
             }
